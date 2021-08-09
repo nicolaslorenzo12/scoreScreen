@@ -4,37 +4,34 @@ public class scoreCalculator {
 
     private int pointsFirstTeam;
     private int pointsSecondTeam;
-    private int foulsFirstTeam;
-    private int foulsSecondTeam;
     private String firstTeam;
     private String secondTeam;
-    private int numberFirstTeam;
-    private int numberSecondTeam;
-    Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
 
     public scoreCalculator(String firstTeam, String secondTeam){
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
         pointsFirstTeam = 0;
         pointsSecondTeam = 0;
-        numberFirstTeam = 1;
-        numberSecondTeam = 2;
     }
 
    public void Welcome(){
-       System.out.println("Welcome to the game " +  " #" +  numberFirstTeam + " " +  firstTeam + " vs " +  " # " + numberSecondTeam + secondTeam);
+       System.out.println("Welcome to the game  " +   firstTeam + " vs " + secondTeam);
    }
+
+    String team = "";
+    int points = 0;
+    String wasThereFoul = "";
+    int foulsFirstTeam = 0;
+    int foulsSecondTeam = 0;
 
    public void letsPlay(){
 
-        int number = 0;
-        int points = 0;
+        while(pointsFirstTeam < 21 && pointsSecondTeam < 21 && foulsFirstTeam < 5 && foulsSecondTeam < 5){
 
-        while(pointsFirstTeam < 21 && pointsSecondTeam < 21){
-
-            while(number > 2 || number == 0) {
-                System.out.println("What team just scored?, please be careful and type a valid number of the team ( 1 or 2) ");
-                number = Integer.parseInt(sc.nextLine());
+            while(!(team.equals("United States") || team.equals("France"))) {
+                System.out.println("What team just scored?, please be careful and type (United States) or (France) ");
+                team = sc.nextLine();
             }
 
             while(points > 3 || points == 0){
@@ -42,24 +39,45 @@ public class scoreCalculator {
                 points = Integer.parseInt(sc.nextLine());
             }
 
-            if(number == numberFirstTeam){
+            if(team.equals("United States")){
                 pointsFirstTeam = pointsFirstTeam + points;
+
             }
-            else if(number == numberSecondTeam){
+            else{
                 pointsSecondTeam = pointsSecondTeam + points;
             }
 
-            System.out.println(firstTeam + "( " + pointsFirstTeam + " )" + secondTeam + "( " + pointsSecondTeam + " )");
+            while(!(wasThereFoul.equals("yes") || wasThereFoul.equals("no"))){
+                System.out.println("Was there a foul?, please answer yes or no");
+                wasThereFoul = sc.nextLine();
+            }
 
-            if(pointsFirstTeam >=21){
+            if(wasThereFoul.equals("yes")){
+                controlFouls(team);
+            }
+
+            System.out.println(firstTeam + "( " + pointsFirstTeam + " )" + " (fouls: " + foulsFirstTeam + " )" +" " +secondTeam + "( " + pointsSecondTeam + " )"  + " (fouls: " + foulsSecondTeam + " )");
+
+            if(pointsFirstTeam >=21 || foulsFirstTeam == 5){
                 System.out.println(firstTeam + " has won the game");
             }
-            else if(pointsSecondTeam >=21){
+            else if(pointsSecondTeam >=21 || foulsSecondTeam == 5){
                 System.out.println(secondTeam + " has won the game");
             }
 
-            number = 0;
+            team = "";
             points = 0;
+            wasThereFoul = "";
         }
+    }
+
+    public void controlFouls(String team){
+
+       if(team.equals(firstTeam)){
+           foulsSecondTeam++;
+       }
+       else if(team.equals(secondTeam)){
+           foulsFirstTeam++;
+       }
     }
 }
