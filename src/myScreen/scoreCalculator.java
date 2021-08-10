@@ -4,9 +4,9 @@ public class scoreCalculator {
 
     private int pointsFirstTeam;
     private int pointsSecondTeam;
-    private String firstTeam;
-    private String secondTeam;
-    private Scanner sc = new Scanner(System.in);
+    private final String firstTeam;
+    private final String secondTeam;
+    private final Scanner sc = new Scanner(System.in);
 
     public scoreCalculator(String firstTeam, String secondTeam){
         this.firstTeam = firstTeam;
@@ -29,7 +29,7 @@ public class scoreCalculator {
 
         while(pointsFirstTeam < 21 && pointsSecondTeam < 21 && foulsFirstTeam < 5 && foulsSecondTeam < 5){
 
-            while(!(team.equals("United States") || team.equals("France"))) {
+            while(!(team.equals(firstTeam) || team.equals(secondTeam))) {
                 System.out.println("What team just scored?, please be careful and type (United States) or (France) ");
                 team = sc.nextLine();
             }
@@ -39,7 +39,7 @@ public class scoreCalculator {
                 points = Integer.parseInt(sc.nextLine());
             }
 
-            if(team.equals("United States")){
+            if(team.equals(firstTeam)){
                 pointsFirstTeam = pointsFirstTeam + points;
 
             }
